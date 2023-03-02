@@ -1,3 +1,58 @@
-**/*
-!**/dist
-!**/default.conf.template
+# managed packages
+**/node_modules
+
+# git files
+**/.git
+.git
+.gitignore
+
+# docker files
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# build files
+**/dist
+**/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+**/.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+
+# local env files
+*.local
+
+# dev files
+*.db
+*.sqlite
+
+# example files
+appconfig.example.yaml
+
+# deploy files
+**/deploy
+!**/deploy/nginx
