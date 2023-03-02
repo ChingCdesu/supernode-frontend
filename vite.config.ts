@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://supernode.maa-org.net/",
+        target: "https://supernode.example.com/",
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },

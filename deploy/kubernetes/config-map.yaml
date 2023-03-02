@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-cm
+  namespace: supernode
+data:
+  SERVER_NAME: supernode.example.com
+  SUPERNODE_SERVER_HOST: http://supernode-web-service

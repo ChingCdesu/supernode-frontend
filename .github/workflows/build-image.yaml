@@ -1,0 +1,71 @@
+name: "Build image and upload to ghcr.io"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+      - "dev"
+  push:
+    branches:
+      - "main"
+      - "dev"
+    tags:
+      - "v*"
+    paths-ignore:
+      - "**.md"
+      - ".dockerignore"
+      - ".gitignore"
+      - ".github/**"
+      - "!.github/workflows/release.yml"
+
+defaults:
+  run:
+    shell: "bash"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      
+      - name: "Use node.js 18"
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: "Docker: Setup Buildx"
+        uses: docker/setup-buildx-action@v2
+
+      - name: "Docker: Login to GitHub Container Registry"
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+  
+      - name: "Docker: Metadata"
+        id: docker-meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/ChingCdesu/supernode-frontend
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=branch,enable=${{ github.ref != format('refs/heads/{0}', 'main') }}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=ref,event=pr
+            type=sha
+      
+      - name: 'Node: vite build'
+        run: 'pnpm build'
+
+      - name: "Docker: Build and Push Image"
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
