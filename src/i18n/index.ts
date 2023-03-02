@@ -7,6 +7,7 @@ import enUS from './locales/en-us.yaml';
 const { language } = useLocaleState();
 
 export default createI18n({
+  legacy: false,
   locale: language.value,
   messages: {
     "zh-CN": zhCN,

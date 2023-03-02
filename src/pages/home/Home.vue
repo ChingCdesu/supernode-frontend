@@ -4,6 +4,8 @@ import { NH1 } from "naive-ui";
 
 <template>
   <div class="page">
-    <NH1>{{ $t('message.welcome') }}</NH1>
+    <div class="page-content">
+      <NH1>{{ $t('message.welcome') }}</NH1>
+    </div>
   </div>
 </template>

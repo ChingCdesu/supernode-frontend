@@ -13,7 +13,9 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://supernode.example.com/",
+        secure: false,
+        changeOrigin: true,
+        target: "https://supernode.maa-org.net/",
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },

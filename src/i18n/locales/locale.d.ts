@@ -1,6 +1,10 @@
 declare module "./*.yaml" {
   interface MessageTranslation {
-    welcome: string;
+    common: {
+      login: string;
+      username: string;
+      passcode: string;
+    };
   }
 
   const translation: {

@@ -11,15 +11,14 @@ import {
   dateJaJP,
 } from "naive-ui";
 import type { NLocale, NDateLocale } from "naive-ui";
-import { useI18n } from "vue-i18n";
 
 export type Language = "zh-CN" | "zh-TW" | "en-US" | "ja-JP";
 
-const localeMap: Record<Language, [NLocale, NDateLocale]> = {
-  "zh-CN": [zhCN, dateZhCN],
-  "zh-TW": [zhTW, dateZhTW],
-  "en-US": [enUS, dateEnUS],
-  "ja-JP": [jaJP, dateJaJP],
+export const localeMap: Record<Language, [NLocale, NDateLocale, string]> = {
+  "zh-CN": [zhCN, dateZhCN, "简体中文"],
+  "zh-TW": [zhTW, dateZhTW, "繁體中文"],
+  "en-US": [enUS, dateEnUS, "English"],
+  "ja-JP": [jaJP, dateJaJP, "日本語"],
 };
 
 const fallbackLocale = "en-US";
@@ -38,13 +37,13 @@ export const useLocaleState = createGlobalState(() => {
 
   const dateLocale = computed(() => localeMap[language.value][1]);
 
+  const displayLocale = computed(() => localeMap[language.value][2]);
+
   function changeLocale(lang: Language) {
     if (!Object.keys(localeMap).includes(lang)) {
       throw new Error(`Language ${lang} is not supported.`);
     }
-    const i18n = useI18n();
     language.value = lang;
-    i18n.locale.value = lang;
   }
 
   return {
@@ -52,5 +51,6 @@ export const useLocaleState = createGlobalState(() => {
     locale,
     dateLocale,
     changeLocale,
+    displayLocale,
   };
 });

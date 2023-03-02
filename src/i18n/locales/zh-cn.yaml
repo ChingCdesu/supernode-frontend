@@ -1,2 +1,8 @@
 message:
-  welcome: '欢迎！'
+  common:
+    login: 登录
+    username: 用户名
+    passcode: 密码
+    welcomeback: 欢迎回来！
+  tips:
+    developing: 该功能还在建设中~ (ovo)

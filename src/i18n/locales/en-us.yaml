@@ -1,2 +1,6 @@
 message:
-  welcome: "Welcome!"
+  common:
+    login: Sign In
+    username: Username
+    passcode: Passcode
+    welcomeback: Welcome Back!
