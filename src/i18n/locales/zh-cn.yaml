@@ -6,3 +6,6 @@ message:
     welcomeback: 欢迎回来！
   tips:
     developing: 该功能还在建设中~ (ovo)
+    requestError: 获取数据失败：{message}
+    unknownNetworkError: 未知网络错误
+    networkOffline: 网络未连接，请检查你的网络设置
