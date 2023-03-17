@@ -7,10 +7,10 @@ import {
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { computed } from "vue";
 import { useDark, useOnline } from "@vueuse/core";
-import { useI18n } from "vue-i18n";
 import { add as addDate } from "date-fns";
 
 import { useAuthState } from "@/store/auth";
+import i18n from "@/i18n";
 
 export interface ApiResponse<T = any> {
   code?: number;
@@ -38,7 +38,6 @@ export interface PaginationResponse<T = any> {
 
 const isDark = useDark();
 const isOnline = useOnline();
-const { t } = useI18n();
 const { tokenExpiredAt } = useAuthState();
 const config = computed<ConfigProviderProps>(() => {
   return { theme: isDark ? darkTheme : lightTheme };
@@ -59,7 +58,7 @@ request.interceptors.request.use((config) => {
   if (!isOnline.value) {
     const source = CancelToken.source();
     config.cancelToken = source.token;
-    message.error(t("message.tips.networkOffline"));
+    message.error(i18n.global.t("message.tips.networkOffline"));
     source.cancel();
   }
   return config;
@@ -70,10 +69,12 @@ request.interceptors.response.use(
     const { data: responseData } = response;
     if (responseData.code !== 0) {
       message.error(
-        t("message.tips.requestError", { message: responseData.message })
+        i18n.global.t("message.tips.requestError", {
+          message: responseData.message,
+        })
       );
     }
-    if (response.headers["X-Authenticated"] /* Authenticated */) {
+    if (response.headers["x-authenticated"] /* Authenticated */) {
       const responseDate = new Date(response.headers["Date"]);
       tokenExpiredAt.value = addDate(responseDate, {
         hours: 1,
@@ -87,10 +88,12 @@ request.interceptors.response.use(
     const { response } = error;
     if (response) {
       message.error(
-        t("message.tips.requestError", { message: response.data.message })
+        i18n.global.t("message.tips.requestError", {
+          message: response.data.message,
+        })
       );
     } else {
-      message.error(t("message.tips.unknownNetworkError"));
+      message.error(i18n.global.t("message.tips.unknownNetworkError"));
     }
     return Promise.reject(error);
   }
@@ -105,24 +108,24 @@ export async function Get<T = any, P = any>(
 
 export async function Post<T = any, D = any, P = any>(
   url: string,
-  params?: P,
-  data?: D
+  data?: D,
+  params?: P
 ): Promise<AxiosResponse<ApiResponse<T>>> {
   return await request.post(url, data, { params });
 }
 
 export async function Put<T = any, D = any, P = any>(
   url: string,
-  params?: P,
-  data?: D
+  data?: D,
+  params?: P
 ): Promise<AxiosResponse<ApiResponse<T>>> {
   return await request.put(url, data, { params });
 }
 
 export async function Patch<T = any, D = any, P = any>(
   url: string,
-  params?: P,
-  data?: D
+  data?: D,
+  params?: P
 ): Promise<AxiosResponse<ApiResponse<T>>> {
   return await request.patch(url, data, { params });
 }

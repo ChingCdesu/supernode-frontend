@@ -5,8 +5,7 @@ export interface User {
   name: string;
   email?: string;
   isAdmin: boolean;
-  password?: string;
-  issuer?: string;
+  issuer: string;
   uniqueId?: string;
   createdAt: string;
   updatedAt: string;

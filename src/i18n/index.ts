@@ -6,11 +6,14 @@ import enUS from './locales/en-us.yaml';
 
 const { language } = useLocaleState();
 
-export default createI18n({
+const i18n = createI18n({
   legacy: false,
   locale: language.value,
+  allowComposition: true,
   messages: {
     "zh-CN": zhCN,
     "en-US": enUS,
   }
 });
+
+export default i18n;
