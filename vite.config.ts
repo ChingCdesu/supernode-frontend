@@ -16,7 +16,6 @@ export default defineConfig({
         secure: false,
         changeOrigin: true,
         target: "https://supernode.maa-org.net/",
-        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
