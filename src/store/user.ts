@@ -1,13 +1,19 @@
 import { createGlobalState } from "@vueuse/core";
 import { ref } from "vue";
-import { login } from "@/api/auth";
-import { User } from "@/api/v1/users";
+import * as AuthApi from "@/api/auth";
+import * as UserApi from "@/api/v1/users";
 
 export const useUserState = createGlobalState(() => {
-  const user = ref<User | null>(null);
+  const user = ref<UserApi.User | null>(null);
 
   async function localLogin(username: string, password: string) {
-    const { data: responseData } = await login(username, password);
+    const { data: responseData } = await AuthApi.localLogin(username, password);
+    user.value = responseData.data!;
+    return user.value;
+  }
+
+  async function getMe() {
+    const { data: responseData } = await UserApi.getMe();
     user.value = responseData.data!;
     return user.value;
   }
@@ -15,5 +21,6 @@ export const useUserState = createGlobalState(() => {
   return {
     user,
     localLogin,
+    getMe,
   };
 });

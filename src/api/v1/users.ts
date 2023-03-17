@@ -40,7 +40,7 @@ export function deleteUser(userId: number) {
   return request.Delete(`/v1/users/${userId}`);
 }
 
-export function getMe<User>() {
+export function getMe() {
   return request.Get<User>("/v1/users/me");
 }
 

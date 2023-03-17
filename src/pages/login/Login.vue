@@ -1,11 +1,23 @@
 <script lang="ts" setup>
 import { NSpace, useThemeVars } from "naive-ui";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+import { useUserState } from "@/store/user";
 
 import ColorSchemaSwitch from "@/components/common/ColorSchemaSwitch.vue";
 import LocaleSelector from "@/components/common/LocaleSelector.vue";
 import LoginCard from "@/components/login/LoginCard.vue";
 
 const themeVars = useThemeVars();
+const { getMe } = useUserState();
+const router = useRouter();
+
+onMounted(() => {
+  getMe().then((user) => {
+    router.push("/");
+  });
+});
 </script>
 
 <template>
