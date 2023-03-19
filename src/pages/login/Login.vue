@@ -35,13 +35,14 @@ onMounted(() => {
       },
     });
     promise.value!.then(() => {
-      router.push("/");
+      router.push({
+        path: router.currentRoute.value.params.redirect as string ?? "/",
+      });
       dialogInstance.destroy();
     }).catch(() => {
       dialogInstance.destroy();
     });
   }
-
 });
 </script>
 

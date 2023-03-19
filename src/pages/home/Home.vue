@@ -20,11 +20,15 @@ onMounted(() => {
 
     }).catch(() => {
       message.error(t("message.user.expired"));
-      router.push("/login");
+      router.push({
+        path: "/login",
+        params: {
+          redirect: router.currentRoute.value.fullPath
+        },
+      });
     });
   }
 });
-
 </script>
 
 <template>
