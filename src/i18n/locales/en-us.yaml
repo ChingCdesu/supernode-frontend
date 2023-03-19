@@ -4,7 +4,12 @@ message:
     username: Username
     passcode: Passcode
     welcomeback: Welcome Back!
+    redirecting: Redirecting...
+    cancel: Cancel
   tips:
     requestError: 'Cannot get data: {message}'
     unknownNetworkError: Unknown network error
     networkOffline: Network offline, please check you internet configuration
+  user:
+    infoFetching: Fetching your information...
+    expired: Session is expired, please re-login

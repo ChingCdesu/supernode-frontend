@@ -75,7 +75,7 @@ request.interceptors.response.use(
       );
     }
     if (response.headers["x-authenticated"] /* Authenticated */) {
-      const responseDate = new Date(response.headers["Date"]);
+      const responseDate = new Date(response.headers["date"]);
       tokenExpiredAt.value = addDate(responseDate, {
         hours: 1,
       });

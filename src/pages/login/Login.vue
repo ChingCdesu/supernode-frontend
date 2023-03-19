@@ -1,22 +1,47 @@
 <script lang="ts" setup>
-import { NSpace, useThemeVars } from "naive-ui";
+import { NSpace, useThemeVars, useDialog } from "naive-ui";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-
-import { useUserState } from "@/store/user";
+import { useI18n } from "vue-i18n";
 
 import ColorSchemaSwitch from "@/components/common/ColorSchemaSwitch.vue";
 import LocaleSelector from "@/components/common/LocaleSelector.vue";
 import LoginCard from "@/components/login/LoginCard.vue";
+import { useCancellablePromise } from "@/utils/cancellablePromise";
+import { useUserState } from "@/store/user";
+import { useAuthState } from "@/store/auth";
 
+const { t } = useI18n();
 const themeVars = useThemeVars();
-const { getMe } = useUserState();
 const router = useRouter();
+const dialog = useDialog();
+
+const { getMe } = useUserState();
+const { isExpired } = useAuthState();
 
 onMounted(() => {
-  getMe().then((user) => {
-    router.push("/");
-  });
+  if (isExpired.value /* 登录信息未过期 */) {
+    const { cancel, promise } = useCancellablePromise(getMe);
+    const dialogInstance = dialog.info({
+      title: t("message.common.redirecting"),
+      content: t("message.user.infoFetching"),
+      negativeText: t("message.common.cancel"),
+      maskClosable: false,
+      closeOnEsc: false,
+      onNegativeClick() {
+        // 用户手动登录
+        cancel();
+        dialogInstance.destroy();
+      },
+    });
+    promise.value!.then(() => {
+      router.push("/");
+      dialogInstance.destroy();
+    }).catch(() => {
+      dialogInstance.destroy();
+    });
+  }
+
 });
 </script>
 

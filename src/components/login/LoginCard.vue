@@ -15,13 +15,16 @@ const { localLogin } = useUserState();
 
 const inputUsername = ref("");
 const inputPassword = ref("");
+const loading = ref(false);
 
 function login() {
+  loading.value = true;
   localLogin(inputUsername.value, inputPassword.value)
     .then((user) => {
       router.push("/");
     })
     .catch((error) => {
+      loading.value = false;
       console.log(error);
     });
 }
@@ -33,39 +36,28 @@ function oidcLogin() {
 
 <template>
   <div class="container">
-    <NCard
-      class="login-card"
-      :bordered="false"
-      :title="$t('message.common.welcomeback')"
-    >
+    <NCard class="login-card" :bordered="false" :title="$t('message.common.welcomeback')">
       <NSpace vertical>
         <div class="input-row">
           <Icon size="24">
             <UserCircle />
           </Icon>
-          <NInput
-            :placeholder="$t('message.common.username')"
-            v-model:value="inputUsername"
-          />
+          <NInput :placeholder="$t('message.common.username')" v-model:value="inputUsername" />
         </div>
         <div class="input-row">
           <Icon size="24">
             <Lock />
           </Icon>
-          <NInput
-            type="password"
-            show-password-on="click"
-            :placeholder="$t('message.common.passcode')"
-            v-model:value="inputPassword"
-          />
+          <NInput type="password" show-password-on="click"
+            :placeholder="$t('message.common.passcode')" v-model:value="inputPassword" />
         </div>
       </NSpace>
 
       <template #action>
         <div class="login-actions">
-          <NButton @click="login">{{
-            $t("message.common.login")
-          }}</NButton>
+          <NButton @click="login" :loading="loading" :disabled="loading">
+            {{ $t("message.common.login") }}
+          </NButton>
           <NButton class="oidc-login" text @click="oidcLogin">
             Login with OIDC
           </NButton>
@@ -86,9 +78,11 @@ function oidcLogin() {
 .login-card {
   text-align: center;
   background-color: transparent;
+
   & :deep(.n-card__action) {
     background-color: transparent;
   }
+
   & :deep(.n-card__content) {
     padding-bottom: 0;
   }
@@ -98,7 +92,8 @@ function oidcLogin() {
   display: flex;
   align-items: center;
   text-align: start;
-  & > :deep(.xicon) {
+
+  &> :deep(.xicon) {
     margin-right: 4px;
   }
 }
@@ -106,7 +101,8 @@ function oidcLogin() {
 .login-actions {
   display: flex;
   flex-direction: column;
-  & > * {
+
+  &>* {
     margin-bottom: 1em;
   }
 }

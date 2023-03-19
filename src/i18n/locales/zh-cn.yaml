@@ -4,8 +4,13 @@ message:
     username: 用户名
     passcode: 密码
     welcomeback: 欢迎回来！
+    redirecting: 正在跳转...
+    cancel: 取消
   tips:
     developing: 该功能还在建设中~ (ovo)
     requestError: 获取数据失败：{message}
     unknownNetworkError: 未知网络错误
     networkOffline: 网络未连接，请检查你的网络设置
+  user:
+    infoFetching: 获取您的用户信息中...
+    expired: 登录信息已过期，请重新登录
