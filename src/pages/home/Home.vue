@@ -1,8 +1,15 @@
 <script lang="ts" setup>
-import { NH1, NLayout, NLayoutHeader, NLayoutSider, NLayoutContent, useMessage } from "naive-ui";
+import {
+  NLayout,
+  NLayoutSider,
+  NLayoutContent,
+  useMessage,
+} from "naive-ui";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+
+import Sider from "@/components/home/Sider/Index.vue";
 
 import { useAuthState } from "@/store/auth";
 import { useUserState } from "@/store/user";
@@ -16,34 +23,29 @@ const { getMe } = useUserState();
 
 onMounted(() => {
   if (isExpired.value /* 登录信息未过期 */) {
-    getMe().then(() => {
-
-    }).catch(() => {
-      message.error(t("message.user.expired"));
-      router.push({
-        path: "/login",
-        params: {
-          redirect: router.currentRoute.value.fullPath
-        },
+    getMe()
+      .then(() => {})
+      .catch(() => {
+        message.error(t("message.user.expired"));
+        router.push({
+          path: "/login",
+          params: {
+            redirect: router.currentRoute.value.fullPath,
+          },
+        });
       });
-    });
   }
 });
 </script>
 
 <template>
-  <NLayout class="page">
-    <NLayoutHeader>
-      <NH1>Header</NH1>
-    </NLayoutHeader>
-    <NLayout has-sider>
-      <NLayoutSider>
-        <NH1>Sider</NH1>
-      </NLayoutSider>
-      <NLayoutContent>
-        <NH1>Content</NH1>
-      </NLayoutContent>
-    </NLayout>
+  <NLayout class="page" has-sider>
+    <NLayoutSider class="sider" bordered>
+      <Sider />
+    </NLayoutSider>
+    <NLayoutContent class="content">
+      <router-view />
+    </NLayoutContent>
   </NLayout>
 </template>
 

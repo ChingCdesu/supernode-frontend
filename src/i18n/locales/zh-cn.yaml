@@ -14,3 +14,9 @@ message:
   user:
     infoFetching: 获取您的用户信息中...
     expired: 登录信息已过期，请重新登录
+    logout: 退出登录
+  routes:
+    dashboard: 仪表盘
+    devices: 设备列表
+    settings: 设置
+    admin: 管理

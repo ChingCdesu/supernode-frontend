@@ -7,9 +7,16 @@ message:
     redirecting: Redirecting...
     cancel: Cancel
   tips:
+    developing: Coming Soon~ (ovo)
     requestError: 'Cannot get data: {message}'
     unknownNetworkError: Unknown network error
     networkOffline: Network offline, please check you internet configuration
   user:
     infoFetching: Fetching your information...
     expired: Session is expired, please re-login
+    logout: Logout
+  routes:
+    dashboard: Dashboard
+    devices: Devices
+    settings: Settings
+    admin: Admin
