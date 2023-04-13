@@ -20,3 +20,8 @@ message:
     devices: 设备列表
     settings: 设置
     admin: 管理
+  settings:
+    appearance:
+      $title: 外观
+      theme: 主题
+      locale: 语言

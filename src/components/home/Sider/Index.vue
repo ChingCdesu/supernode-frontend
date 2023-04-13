@@ -86,7 +86,10 @@ const userActionOptions: DropdownOption[] = [
       </NSpace> -->
       <NDropdown :options="userActionOptions" placement="right">
         <div class="px-4 flex justify-between items-center w-full">
-          <NAvatar round size="large" src="" />
+          <NAvatar round size="large">
+            <!-- TODO: avatar image -->
+            {{ user?.name }}
+          </NAvatar>
           <NText strong>{{ user?.name }}</NText>
         </div>
       </NDropdown>
