@@ -6,9 +6,10 @@ message:
     welcomeback: Welcome Back!
     redirecting: Redirecting...
     cancel: Cancel
+    community: Community
   tips:
     developing: Coming Soon~ (ovo)
-    requestError: 'Cannot get data: {message}'
+    requestError: "Cannot get data: {message}"
     unknownNetworkError: Unknown network error
     networkOffline: Network offline, please check you internet configuration
   user:
@@ -25,3 +26,13 @@ message:
       $title: Appearance
       theme: Theme
       locale: Language
+  dashboard:
+    myDevices: My Devices
+  devices:
+    emptyTip: New here? No devices found
+    emptyAddTip: Register a new device
+    protocol: "Device protocol: {protocol}"
+    mac: "Device MAC: {mac}"
+    ip: "Device IP address: {ip}"
+    lastSeen: "Last seen"
+    createdAt: "Joined at"

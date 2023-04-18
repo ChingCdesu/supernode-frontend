@@ -1,24 +1,6 @@
 import * as request from "@/utils/request";
 
-export interface User {
-  id: number;
-  name: string;
-  email?: string;
-  isAdmin: boolean;
-  issuer: string;
-  uniqueId?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface CreateUserDto {
-  name: string;
-  email?: string;
-  isAdmin?: boolean;
-  password?: string;
-}
-
-export type UpdateUserDto = Partial<CreateUserDto>;
+import { User, CreateUserDto, UpdateUserDto } from "@/api/v1/dtos/users";
 
 export function listUsers(pagination?: Partial<request.PaginationParams>) {
   return request.Get<request.PaginationResponse<User>>("/v1/users", pagination);

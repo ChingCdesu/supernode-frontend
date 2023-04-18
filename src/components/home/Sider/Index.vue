@@ -21,9 +21,6 @@ import {
   HeartRateMonitor,
 } from "@vicons/tabler";
 
-import ColorSchemaSwitch from "@/components/common/ColorSchemaSwitch.vue";
-import LocaleSelector from "@/components/common/LocaleSelector.vue";
-
 import { useUserState } from "@/store/user";
 
 const { t } = useI18n();
@@ -32,16 +29,16 @@ const { user } = useUserState();
 
 const menuOptions: ComputedRef<MenuOption[]> = computed(() => {
   return [
+    // {
+    //   label: () =>
+    //     h(RouterLink, { to: "/" }, () => t("message.routes.dashboard")),
+    //   key: "/",
+    //   icon: () => h(Icon, null, { default: () => h(Dashboard) }),
+    // },
     {
       label: () =>
-        h(RouterLink, { to: "/" }, () => t("message.routes.dashboard")),
+        h(RouterLink, { to: "/" }, () => t("message.routes.devices")),
       key: "/",
-      icon: () => h(Icon, null, { default: () => h(Dashboard) }),
-    },
-    {
-      label: () =>
-        h(RouterLink, { to: "/devices" }, () => t("message.routes.devices")),
-      key: "/devices",
       icon: () => h(Icon, null, { default: () => h(Devices) }),
     },
     {

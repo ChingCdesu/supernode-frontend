@@ -6,6 +6,7 @@ message:
     welcomeback: 欢迎回来！
     redirecting: 正在跳转...
     cancel: 取消
+    community: 社群
   tips:
     developing: 该功能还在建设中~ (ovo)
     requestError: 获取数据失败：{message}
@@ -25,3 +26,13 @@ message:
       $title: 外观
       theme: 主题
       locale: 语言
+  dashboard:
+    myDevices: 我的设备
+  devices:
+    emptyTip: 新来的？这儿还没有你的那些破玩意儿
+    emptyAddTip: 给我整一个
+    protocol: "连接协议: {protocol}"
+    mac: "设备MAC地址: {mac}"
+    ip: "设备IP地址: {ip}"
+    lastSeen: "最后连接于"
+    createdAt: "添加于"

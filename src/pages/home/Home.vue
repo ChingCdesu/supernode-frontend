@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import {
-  NLayout,
-  NLayoutSider,
-  NLayoutContent,
-  useMessage,
-} from "naive-ui";
+import { NLayout, NLayoutSider, NLayoutContent, useMessage } from "naive-ui";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -13,6 +8,7 @@ import Sider from "@/components/home/Sider/Index.vue";
 
 import { useAuthState } from "@/store/auth";
 import { useUserState } from "@/store/user";
+
 
 const router = useRouter();
 const message = useMessage();
@@ -48,9 +44,3 @@ onMounted(() => {
     </NLayoutContent>
   </NLayout>
 </template>
-
-<style lang="less" scoped>
-.n-h {
-  margin: 0;
-}
-</style>
