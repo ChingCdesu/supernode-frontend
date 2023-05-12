@@ -19,6 +19,8 @@ import {
   Dashboard,
   Logout,
   HeartRateMonitor,
+  UserCircle,
+  Planet,
 } from "@vicons/tabler";
 
 import { useUserState } from "@/store/user";
@@ -48,11 +50,36 @@ const menuOptions: ComputedRef<MenuOption[]> = computed(() => {
       icon: () => h(Icon, null, { default: () => h(Settings) }),
     },
     {
-      label: () =>
-        h(RouterLink, { to: "/admin" }, () => t("message.routes.admin")),
+      label: t("message.routes.admin"),
       key: "/admin",
       icon: () => h(Icon, null, { default: () => h(HeartRateMonitor) }),
       show: !!user.value?.isAdmin,
+      children: [
+        {
+          label: () =>
+            h(RouterLink, { to: "/admin/users" }, () =>
+              t("message.routes.users")
+            ),
+          key: "/admin/users",
+          icon: () => h(Icon, null, { default: () => h(UserCircle) }),
+        },
+        {
+          label: () =>
+            h(RouterLink, { to: "/admin/communities" }, () =>
+              t("message.routes.communities")
+            ),
+          key: "/admin/communities",
+          icon: () => h(Icon, null, { default: () => h(Planet) }),
+        },
+        {
+          label: () =>
+            h(RouterLink, { to: "/admin/devices" }, () =>
+              t("message.routes.devices")
+            ),
+          key: "/admin/devices",
+          icon: () => h(Icon, null, { default: () => h(Devices) }),
+        },
+      ],
     },
   ];
 });

@@ -18,9 +18,11 @@ message:
     logout: 退出登录
   routes:
     dashboard: 仪表盘
-    devices: 设备列表
+    devices: 设备
     settings: 设置
-    admin: 管理
+    admin: 管理Supernode
+    communities: 社群
+    users: 用户
   settings:
     appearance:
       $title: 外观

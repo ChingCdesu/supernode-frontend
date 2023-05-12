@@ -21,6 +21,9 @@ message:
     devices: Devices
     settings: Settings
     admin: Admin
+    communities: Communities
+    users: Users
+      
   settings:
     appearance:
       $title: Appearance
@@ -30,7 +33,7 @@ message:
     myDevices: My Devices
   devices:
     emptyTip: New here? No devices found
-    emptyAddTip: Register a new device
+    emptyAddTip: Add a new device
     protocol: "Device protocol: {protocol}"
     mac: "Device MAC: {mac}"
     ip: "Device IP address: {ip}"
