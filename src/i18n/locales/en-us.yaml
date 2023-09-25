@@ -39,3 +39,6 @@ message:
     ip: "Device IP address: {ip}"
     lastSeen: "Last seen"
     createdAt: "Joined at"
+    owner: "Owner"
+    deleteConfirm: "Delete this device? (Cannot undo)"
+    

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, onMounted, ref, computed } from "vue";
+import { type Ref, onMounted, ref } from "vue";
 import {
   NList,
   NListItem,
@@ -9,115 +9,117 @@ import {
   NButton,
   NH3,
   NSpace,
+  NModal,
   useLoadingBar,
 } from "naive-ui";
-import { useInterval } from "@vueuse/core";
-import { MoodConfuzed, Plus } from "@vicons/tabler";
+import { Crown, Plus, Refresh } from "@vicons/tabler";
 import { Icon } from "@vicons/utils";
-import { uniqBy } from "lodash";
 
 import DeviceCard from "./DeviceCard.vue";
+import NewDeviceModal from "./NewDeviceModal.vue";
 
-import { listDevices } from "@/api/v1/business/devices";
-import { Device } from "@/api/v1/dtos/devices";
 import { Community } from "@/api/v1/dtos/community";
-
-interface CommunityWithDevices extends Community {
-  devices?: Device[];
-}
+import { listCommunities } from "@/api/v1/business/community";
 
 const loadingBar = useLoadingBar();
+
 const firstLoading = ref(true);
+const showNewDeviceModal = ref(false);
 
-const myDevices: Ref<Device[]> = ref([]);
-const joinedCommunities = computed(() => {
-  const communities = uniqBy(
-    myDevices.value.map((device) => device.community),
-    "id"
-  ) as CommunityWithDevices[];
-  for (const community of communities) {
-    community.devices = myDevices.value.filter(
-      (device) => device.community.id === community.id
-    );
-  }
-  return communities;
-});
+const allCommunities: Ref<Community[]> = ref([]);
+const newDevicePresetCommunity: Ref<Community | undefined> = ref();
 
-function getDevices() {
+async function getCommunities() {
+  let page = 1
+  let stop = false
+  const communities: Community[] = []
+
   if (firstLoading.value) {
     loadingBar.start();
   }
-  listDevices()
-    .then((res) => {
-      myDevices.value = res.data.data ?? [];
-      if (firstLoading.value) {
-        loadingBar.finish();
+
+  while (!stop) {
+    try {
+      const res = await listCommunities({ page, limit: 100 }, true);
+      const arr = res.data.data?.data ?? [];
+      communities.push(...arr);
+      page += 1;
+      if (!!!res.data.data?.meta.hasNextPage) {
+        if (firstLoading.value) {
+          loadingBar.finish();
+          firstLoading.value = false;
+        }
+        stop = true;
       }
-    })
-    .catch((err) => {
+    } catch (err) {
       if (firstLoading.value) {
         loadingBar.error();
+        firstLoading.value = false;
       }
-      throw err;
-    })
-    .finally(() => {
-      firstLoading.value = false;
-    });
+      console.error(err);
+      stop = true;
+    }
+  }
+  allCommunities.value = communities;
 }
 
-onMounted(() => {
-  useInterval(3000, {
-    callback: getDevices,
-  });
-});
+async function addDevice(preset?: Community) {
+  newDevicePresetCommunity.value = preset;
+  showNewDeviceModal.value = true;
+}
+
+onMounted(getCommunities);
 </script>
 
 <template>
-  <div>
-    <NList class="p-4">
-      <NListItem v-for="community of joinedCommunities" :key="community.id">
+  <div class="p-4">
+    <NSpace justify="end" align="center">
+      <NButton quaternary circle @click="getCommunities">
+        <template #icon>
+          <Refresh />
+        </template>
+      </NButton>
+    </NSpace>
+    <NList>
+      <NListItem v-for="community of allCommunities" :key="community.id">
         <div class="flex justify-between">
           <NH3>
             <span>{{ $t("message.common.community") }}:&nbsp;</span>
             <span>{{ community.name }}</span>
           </NH3>
           <NSpace>
-            <NButton quaternary circle>
+            <NButton quaternary circle @click="() => addDevice(community)">
               <template #icon>
-                <Icon><Plus /></Icon>
+                <Icon>
+                  <Plus />
+                </Icon>
               </template>
             </NButton>
           </NSpace>
         </div>
+        <div class="flex justify-center items-center w-full my-5" v-show="community.devices.length === 0">
+          <NEmpty :description="$t('message.devices.emptyTip')">
+            <template #icon>
+              <Icon>
+                <Crown />
+              </Icon>
+            </template>
+            <template #extra>
+              <NButton size="small" type="primary" @click="() => addDevice(community)">
+                {{ $t("message.devices.emptyAddTip") }}
+              </NButton>
+            </template>
+          </NEmpty>
+        </div>
         <NGrid v-if="community.devices" :cols="4" :x-gap="12">
           <NGridItem v-for="device of community.devices">
-            <DeviceCard :device="device" />
+            <DeviceCard :device="device" @deleted="getCommunities" />
           </NGridItem>
         </NGrid>
       </NListItem>
     </NList>
-    <div class="empty-tip" v-show="myDevices.length === 0">
-      <NEmpty :description="$t('message.devices.emptyTip')">
-        <template #icon>
-          <Icon><MoodConfuzed /></Icon>
-        </template>
-        <template #extra>
-          <NButton size="small" type="primary">
-            {{ $t("message.devices.emptyAddTip") }}
-          </NButton>
-        </template>
-      </NEmpty>
-    </div>
+    <NModal v-model:show="showNewDeviceModal">
+      <NewDeviceModal :community="newDevicePresetCommunity" />
+    </NModal>
   </div>
 </template>
-
-<style lang="less" scoped>
-.empty-tip {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-}
-</style>

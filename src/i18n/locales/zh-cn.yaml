@@ -31,10 +31,19 @@ message:
   dashboard:
     myDevices: 我的设备
   devices:
-    emptyTip: 新来的？这儿还没有你的那些破玩意儿
+    emptyTip: 高级头衔“头号社群人物”点击就送
     emptyAddTip: 给我整一个
     protocol: "连接协议: {protocol}"
     mac: "设备MAC地址: {mac}"
     ip: "设备IP地址: {ip}"
     lastSeen: "最后连接于"
     createdAt: "添加于"
+    owner: "归属于"
+    deleteConfirm: "删除这个设备？（无法恢复）"
+  newDevice:
+    addNewDevice: "添加新设备"
+    selectCommunity: "选择社群"
+    deviceName: "设备名称"
+    advanced: "高级"
+    publicKey: "密钥"
+    add: "添加"

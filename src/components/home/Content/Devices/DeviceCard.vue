@@ -3,28 +3,38 @@ import { NButton, NCard, NSpace, NText, NTime } from "naive-ui";
 import { Icon } from "@vicons/utils";
 import { TrashX } from "@vicons/tabler";
 
-import { Device } from "@/api/v1/dtos/devices";
+import { useUserState } from "@/store/user";
+
+import type { Device } from "@/api/v1/dtos/devices";
+import { deleteDevice } from "@/api/v1/business/devices";
 
 const props = defineProps<{
   device: Device;
 }>();
+
+const emit = defineEmits(['deleted'])
+
+const { user } = useUserState()
+
+function removeThisDevice() {
+  deleteDevice(props.device.id).then(() => emit('deleted'))
+}
 </script>
 
 <template>
   <NCard segmented>
     <template #header>
       <NSpace align="center" size="small">
-        <div
-          class="status-circle"
-          :class="props.device.isOnline ? 'online' : ''"
-        />
+        <div class="status-circle" :class="props.device.isOnline ? 'online' : ''" />
         <NText class="text-xl mr-1">{{ props.device.name }}</NText>
       </NSpace>
     </template>
     <template #header-extra>
-      <NButton text circle type="error">
+      <NButton text circle type="error" v-if="user?.id === props.device.owner.id" @click="removeThisDevice">
         <template #icon>
-          <Icon><TrashX /></Icon>
+          <Icon>
+            <TrashX />
+          </Icon>
         </template>
       </NButton>
     </template>
@@ -33,6 +43,10 @@ const props = defineProps<{
         <NText>
           {{ $t("message.devices.createdAt") }}:
           <NTime :time="new Date(props.device.createdAt)" />
+        </NText>
+        <NText>
+          {{ $t("message.devices.owner") }}:
+          <NText strong>{{ props.device.owner.name }}</NText>
         </NText>
         <NText v-if="props.device.isOnline">
           {{ $t("message.devices.ip", { ip: props.device.ip }) }}
@@ -60,6 +74,7 @@ const props = defineProps<{
   height: 10px;
   border-radius: 50%;
   background-color: #a3a3a3;
+
   &.online {
     background-color: #4ade80;
   }

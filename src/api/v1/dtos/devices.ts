@@ -1,5 +1,5 @@
-import { Community } from "./community";
-
+import type { Community } from "./community";
+import type { User } from "./users";
 export interface Device {
   id: number;
   name: string;
@@ -8,7 +8,8 @@ export interface Device {
   community: Community;
   mac?: string;
   ip?: string;
-  protocol?: 'TCP' | 'UDP';
+  protocol?: "TCP" | "UDP";
+  owner: User;
   lastSeen?: Date;
   createdAt: Date;
   updatedAt: Date;

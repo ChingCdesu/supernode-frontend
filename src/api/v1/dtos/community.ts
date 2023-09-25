@@ -5,6 +5,7 @@ export interface Community {
   name: string;
   subnet: string;
   encryption: boolean;
+  devices: Device[];
   totalUserCount?: number;
   onlineUserCount?: number;
   createdAt: Date;
