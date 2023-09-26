@@ -1,8 +1,11 @@
-FROM node:lts-alpine as build
+FROM emscripten/emsdk:3.1.46 as build
 WORKDIR /code
 
 COPY . .
 RUN npm i -g pnpm
+
+WORKDIR /code/native
+RUN ./build.sh
 
 RUN pnpm i
 RUN pnpm build
