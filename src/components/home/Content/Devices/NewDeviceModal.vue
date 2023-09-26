@@ -11,19 +11,51 @@ import {
   NCollapseItem,
   NInput,
   NButton,
+  type FormInst,
 } from "naive-ui";
 import { useI18n } from "vue-i18n";
 
 import { onMounted, ref, computed, type Ref } from "vue";
 import { listCommunities } from "@/api/v1/business/community";
+import { addDevice } from "@/api/v1/business/devices";
+import { useUserState } from "@/store/user";
+import { generate_user_token } from "@/utils/crypto";
 
 const props = defineProps<{
   community?: Community;
 }>();
+const emit = defineEmits(['added']);
 
 const { t } = useI18n();
+const { user } = useUserState()
 
 const allCommunities: Ref<Community[]> = ref([]);
+
+const formRef = ref<FormInst | null>(null)
+
+const device = ref({
+  name: "",
+  communityId: props.community?.id,
+  password: "",
+});
+
+const rules = {
+  name: {
+    required: true,
+    message: t("message.common.required", { field: t("message.newDevice.deviceName") }),
+    trigger: 'blur',
+  },
+  communityId: {
+    required: true,
+    message: t("message.common.required", { field: t("message.common.community") }),
+    trigger: 'blur',
+  },
+  password: {
+    required: true,
+    message: t("message.common.required", { field: t("message.newDevice.password") }),
+    trigger: 'blur',
+  },
+}
 
 const communitySelectOptions = computed(() =>
   allCommunities.value.map((c) => ({ label: c.name, value: c.id }))
@@ -51,6 +83,22 @@ async function getCommunities() {
   allCommunities.value = communities;
 }
 
+function newDevice() {
+  formRef.value?.validate(async errors => {
+    if (errors) {
+      return;
+    }
+
+    await addDevice({
+      name: device.value.name,
+      communityId: device.value.communityId!,
+      publicKey: await generate_user_token(user.value!.name, device.value.password),
+    });
+
+    emit('added');
+  });
+}
+
 onMounted(getCommunities);
 </script>
 
@@ -60,36 +108,31 @@ onMounted(getCommunities);
       <NText>{{ $t("message.newDevice.addNewDevice") }}</NText>
     </template>
     <template #default>
-      <NForm>
-        <NFormItem :label="t('message.common.community')">
-          <NSelect
-            filterable
-            :placeholder="t('message.newDevice.selectCommunity')"
-            :options="communitySelectOptions"
-            :defaultValue="props.community?.id"
-          />
+      <NForm ref="formRef" :model="device" :rules="rules">
+        <NFormItem :label="t('message.common.community')" path="communityId">
+          <NSelect filterable :placeholder="t('message.newDevice.selectCommunity')" :options="communitySelectOptions" />
         </NFormItem>
-        <NFormItem :label="t('message.newDevice.deviceName')">
+        <NFormItem :label="t('message.newDevice.deviceName')" path="name">
           <NInput />
         </NFormItem>
-        <NCollapse>
+        <!-- <NCollapse>
           <NCollapseItem>
             <template #header>
               <NText>{{ $t('message.newDevice.advanced') }}</NText>
             </template>
-            <template #default>
-              <NFormItem :label="t('message.newDevice.publicKey')">
-                <NInput />
-              </NFormItem>
-            </template>
+            <template #default> -->
+        <NFormItem :label="t('message.newDevice.password')" path="password">
+          <NInput />
+        </NFormItem>
+        <!-- </template>
           </NCollapseItem>
-        </NCollapse>
+        </NCollapse> -->
       </NForm>
     </template>
     <template #footer>
       <NSpace justify="end" align="center">
         <NButton secondary> {{ $t('message.common.cancel') }}</NButton>
-        <NButton type="primary">{{ $t('message.newDevice.add') }}</NButton>
+        <NButton type="primary" @click="newDevice">{{ $t('message.newDevice.add') }}</NButton>
       </NSpace>
     </template>
   </NCard>

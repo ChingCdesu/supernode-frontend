@@ -45,5 +45,5 @@ message:
     selectCommunity: "选择社群"
     deviceName: "设备名称"
     advanced: "高级"
-    publicKey: "密钥"
+    password: "密码"
     add: "添加"

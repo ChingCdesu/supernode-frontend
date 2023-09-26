@@ -20,6 +20,9 @@
       "@/*": [
         "src/*"
       ],
+      "@native/*": [
+        "native/*"
+      ],
     }
   },
   "include": [

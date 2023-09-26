@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# wasm generated files
+native/*.wasm
+native/*.js
+native/*.mjs
