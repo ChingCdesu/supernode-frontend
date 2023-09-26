@@ -26,7 +26,14 @@ export type BusinessUpdateDeviceDto = Partial<BusinessCreateDeviceDto>;
 export interface ManagementCreateDeviceDto {
   name: string;
   publicKey: string;
+  communityId: number;
   ownerId: number;
 }
 
 export type ManagementUpdateDeviceDto = Partial<ManagementCreateDeviceDto>;
+
+export interface NewDeviceDto {
+  name: string;
+  communityId: number;
+  password: string;
+}

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "native:configure": "cd native/thirdparty/n2n; ./autogen.sh && ./configure",
+    "native:build": "cd native; ./build.sh"
   },
   "dependencies": {
     "@vueuse/components": "^9.13.0",

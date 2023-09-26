@@ -17,22 +17,26 @@ import { Icon } from "@vicons/utils";
 
 import DeviceCard from "./DeviceCard.vue";
 import NewDeviceModal from "./NewDeviceModal.vue";
+import NewDeviceResult from "./NewDeviceResult.vue";
 
 import { Community } from "@/api/v1/dtos/community";
 import { listCommunities } from "@/api/v1/business/community";
+import { NewDeviceDto } from "@/api/v1/dtos/devices";
 
 const loadingBar = useLoadingBar();
 
 const firstLoading = ref(true);
 const showNewDeviceModal = ref(false);
+const showNewDeviceResult = ref(false);
 
 const allCommunities: Ref<Community[]> = ref([]);
 const newDevicePresetCommunity: Ref<Community | undefined> = ref();
+const newDevice: Ref<NewDeviceDto | undefined> = ref();
 
 async function getCommunities() {
-  let page = 1
-  let stop = false
-  const communities: Community[] = []
+  let page = 1;
+  let stop = false;
+  const communities: Community[] = [];
 
   if (firstLoading.value) {
     loadingBar.start();
@@ -68,6 +72,11 @@ async function addDevice(preset?: Community) {
   showNewDeviceModal.value = true;
 }
 
+function addedDevice(device: NewDeviceDto) {
+  newDevice.value = device;
+  showNewDeviceResult.value = true;
+}
+
 onMounted(getCommunities);
 </script>
 
@@ -97,7 +106,10 @@ onMounted(getCommunities);
             </NButton>
           </NSpace>
         </div>
-        <div class="flex justify-center items-center w-full my-5" v-show="community.devices.length === 0">
+        <div
+          class="flex justify-center items-center w-full my-5"
+          v-show="community.devices.length === 0"
+        >
           <NEmpty :description="$t('message.devices.emptyTip')">
             <template #icon>
               <Icon>
@@ -105,7 +117,11 @@ onMounted(getCommunities);
               </Icon>
             </template>
             <template #extra>
-              <NButton size="small" type="primary" @click="() => addDevice(community)">
+              <NButton
+                size="small"
+                type="primary"
+                @click="() => addDevice(community)"
+              >
                 {{ $t("message.devices.emptyAddTip") }}
               </NButton>
             </template>
@@ -119,7 +135,20 @@ onMounted(getCommunities);
       </NListItem>
     </NList>
     <NModal v-model:show="showNewDeviceModal">
-      <NewDeviceModal :community="newDevicePresetCommunity" />
+      <NewDeviceModal
+        v-if="!showNewDeviceResult"
+        :community="newDevicePresetCommunity!"
+        @cancel="showNewDeviceModal = false"
+        @added="addedDevice"
+      />
+      <NewDeviceResult
+        v-else
+        :device="newDevice!"
+        @close="
+          showNewDeviceModal = false;
+          showNewDeviceResult = false;
+        "
+      />
     </NModal>
   </div>
 </template>

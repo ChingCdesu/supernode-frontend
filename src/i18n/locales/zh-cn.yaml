@@ -5,8 +5,11 @@ message:
     passcode: 密码
     welcomeback: 欢迎回来！
     redirecting: 正在跳转...
+    confirm: 确定
+    close: 关闭
     cancel: 取消
     community: 社群
+    required: "{field}为必填项"
   tips:
     developing: 该功能还在建设中~ (ovo)
     requestError: 获取数据失败：{message}
@@ -47,3 +50,4 @@ message:
     advanced: "高级"
     password: "密码"
     add: "添加"
+    deviceAdded: 已添加设备
