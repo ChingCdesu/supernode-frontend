@@ -24,12 +24,12 @@ export function getCommunityById(communityId: number) {
   return request.Get<Community>(`/v1/management/communities/${communityId}}`);
 }
 
-export function updateCommunityInfo(
-  communityId: number,
-  updateInfo: UpdateCommunityDto
-) {
-  return request.Put(`/v1/management/communities/${communityId}`, updateInfo);
-}
+// export function updateCommunityInfo(
+//   communityId: number,
+//   updateInfo: UpdateCommunityDto
+// ) {
+//   return request.Put(`/v1/management/communities/${communityId}`, updateInfo);
+// }
 
 export function deleteCommunity(communityId: number) {
   return request.Delete(`/v1/management/communities/${communityId}`);

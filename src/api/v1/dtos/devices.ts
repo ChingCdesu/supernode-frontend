@@ -10,7 +10,7 @@ export interface Device {
   ip?: string;
   protocol?: "TCP" | "UDP";
   owner: User;
-  lastSeen?: Date;
+  lastSeen?: number;
   createdAt: Date;
   updatedAt: Date;
 }

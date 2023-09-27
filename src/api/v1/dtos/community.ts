@@ -8,8 +8,8 @@ export interface Community {
   devices: Device[];
   totalUserCount?: number;
   onlineUserCount?: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateCommunityDto {

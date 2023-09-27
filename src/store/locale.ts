@@ -1,5 +1,5 @@
 import { ref, computed, Ref } from "vue";
-import { createGlobalState } from "@vueuse/core";
+import { createGlobalState, useLocalStorage } from "@vueuse/core";
 import {
   zhCN,
   zhTW,
@@ -23,11 +23,16 @@ export const localeMap: Record<Language, [NLocale, NDateLocale, string]> = {
 
 const fallbackLocale = "en-US";
 
+const storedLanguage = useLocalStorage<Language>("language", "en-US");
+
 function getLanguage(): Language {
   const locale = navigator.language;
-  return Object.keys(localeMap).includes(locale)
+  const navigatorLanguage = Object.keys(localeMap).includes(locale)
     ? (locale as Language)
     : fallbackLocale;
+  return Object.keys(localeMap).includes(storedLanguage.value)
+    ? storedLanguage.value
+    : navigatorLanguage;
 }
 
 export const useLocaleState = createGlobalState(() => {
@@ -44,6 +49,7 @@ export const useLocaleState = createGlobalState(() => {
       throw new Error(`Language ${lang} is not supported.`);
     }
     language.value = lang;
+    storedLanguage.value = lang;
   }
 
   return {

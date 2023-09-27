@@ -12,6 +12,8 @@ message:
     required: "{field}为必填项"
     copy: "复制"
     copied: "已复制！"
+    create: 创建
+    update: 更新
   tips:
     developing: 该功能还在建设中~ (ovo)
     requestError: 获取数据失败：{message}
@@ -60,3 +62,20 @@ message:
     securityTip: "你的密码和密钥不会在服务器保存，所以请务必妥善保管！"
     ipAddress: "IP地址"
     ipAddressTip: "你可以指定设备的IP地址，如果不指定则会自动分配"
+  admin:
+    community:
+      column:
+        name: 社群名称
+        subnet: 子网网段
+        authority: 身份验证方式
+        onlineDeviceCount: 在线设备数
+        totalDeviceCount: 设备数
+        createdAt: 创建时间
+        updatedAt: 更新时间
+        action: 操作
+      authority:
+        public: 任何人可加入
+        private: 用户名密码验证
+      edit:
+        createNewCommunity: 创建新社群
+        editCommunity: 编辑社群

@@ -61,7 +61,7 @@ function removeThisDevice() {
         </NText>
         <NText v-if="props.device.isOnline">
           {{ $t("message.devices.lastSeen") }}:
-          <NTime :time="new Date(props.device.lastSeen!)" />
+          <NTime :time="new Date(props.device.lastSeen! * 1000)" />
         </NText>
       </NSpace>
     </template>

@@ -28,7 +28,7 @@ const route: RouteRecordRaw = {
         },
         {
           path: "communities",
-          component: () => import("@/components/home/Content/Admin/Communities.vue"),
+          component: () => import("@/components/home/Content/Admin/Communities/Communities.vue"),
         },
       ],
     },
