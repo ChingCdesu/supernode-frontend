@@ -32,8 +32,6 @@ export interface ManagementCreateDeviceDto {
 
 export type ManagementUpdateDeviceDto = Partial<ManagementCreateDeviceDto>;
 
-export interface NewDeviceDto {
-  name: string;
-  communityId: number;
+export interface NewDeviceDto extends Device {
   password: string;
 }

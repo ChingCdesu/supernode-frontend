@@ -75,6 +75,7 @@ async function addDevice(preset?: Community) {
 function addedDevice(device: NewDeviceDto) {
   newDevice.value = device;
   showNewDeviceResult.value = true;
+  getCommunities();
 }
 
 onMounted(getCommunities);

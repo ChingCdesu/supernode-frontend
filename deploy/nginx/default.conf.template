@@ -18,3 +18,7 @@ server {
         proxy_set_header        Host $http_host;
     }
 }
+
+types {
+    application/wasm            wasm;
+}

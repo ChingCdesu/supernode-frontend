@@ -4,11 +4,7 @@ WORKDIR /code
 COPY . .
 RUN npm i -g pnpm
 
-WORKDIR /code/native
-RUN ./build.sh
-
-RUN pnpm i
-RUN pnpm build
+RUN pnpm i && pnpm native:configure && pnpm native:build && pnpm build
 
 FROM nginx:alpine
 WORKDIR /root

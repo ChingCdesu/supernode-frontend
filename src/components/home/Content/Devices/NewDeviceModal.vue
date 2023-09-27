@@ -100,7 +100,7 @@ function newDevice() {
       return;
     }
 
-    await addDevice({
+    const response = await addDevice({
       name: device.value.name,
       communityId: device.value.communityId!,
       publicKey: await generate_user_token(
@@ -108,8 +108,9 @@ function newDevice() {
         device.value.password
       ),
     });
+    const { data } = response.data;
 
-    emit("added", device.value);
+    emit("added", { ...data!, password: device.value.password });
   });
 }
 
@@ -124,13 +125,8 @@ onMounted(getCommunities);
     <template #default>
       <NForm ref="formRef" :model="device" :rules="rules">
         <NFormItem :label="t('message.common.community')" path="communityId">
-          <NSelect
-            filterable
-            :placeholder="t('message.newDevice.selectCommunity')"
-            :options="communitySelectOptions"
-            :default-value="props.community?.id"
-            v-model:value="device.communityId"
-          />
+          <NSelect filterable :placeholder="t('message.newDevice.selectCommunity')" :options="communitySelectOptions"
+            :default-value="props.community?.id" v-model:value="device.communityId" />
         </NFormItem>
         <NFormItem :label="t('message.newDevice.deviceName')" path="name">
           <NInput v-model:value="device.name" />
@@ -142,11 +138,7 @@ onMounted(getCommunities);
             </template>
             <template #default> -->
         <NFormItem :label="t('message.newDevice.password')" path="password">
-          <NInput
-            type="password"
-            v-model:value="device.password"
-            show-password-on="click"
-          />
+          <NInput type="password" v-model:value="device.password" show-password-on="click" />
         </NFormItem>
         <!-- </template>
           </NCollapseItem>
