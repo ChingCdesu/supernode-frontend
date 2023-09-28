@@ -12,26 +12,31 @@ import {
   NModal,
   useLoadingBar,
 } from "naive-ui";
-import { Crown, Plus, Refresh } from "@vicons/tabler";
+import { Crown, Plus, Refresh, AccessPoint } from "@vicons/tabler";
 import { Icon } from "@vicons/utils";
 
 import DeviceCard from "./DeviceCard.vue";
 import NewDeviceModal from "./NewDeviceModal.vue";
 import NewDeviceResult from "./NewDeviceResult.vue";
+import PublicCommunityJoin from "./PublicCommunityJoin.vue";
 
 import { Community } from "@/api/v1/dtos/community";
 import { listCommunities } from "@/api/v1/business/community";
 import { NewDeviceDto } from "@/api/v1/dtos/devices";
+import { Supernode } from "@/api/v1/dtos/supernode";
+import { getServerInfo } from "@/api/v1/common/supernode";
 
 const loadingBar = useLoadingBar();
 
 const firstLoading = ref(true);
 const showNewDeviceModal = ref(false);
 const showNewDeviceResult = ref(false);
+const showPublicCommunityJoinModal = ref(false);
 
 const allCommunities: Ref<Community[]> = ref([]);
 const newDevicePresetCommunity: Ref<Community | undefined> = ref();
 const newDevice: Ref<NewDeviceDto | undefined> = ref();
+const serverInfo: Ref<Supernode | undefined> = ref();
 
 async function getCommunities() {
   let page = 1;
@@ -78,7 +83,16 @@ function addedDevice(device: NewDeviceDto) {
   getCommunities();
 }
 
-onMounted(getCommunities);
+function joinPublicCommunity(community: Community) {
+  newDevicePresetCommunity.value = community;
+  showPublicCommunityJoinModal.value = true;
+}
+
+onMounted(async () => {
+  const response = await getServerInfo();
+  serverInfo.value = response.data.data;
+  await getCommunities();
+});
 </script>
 
 <template>
@@ -109,7 +123,28 @@ onMounted(getCommunities);
         </div>
         <div
           class="flex justify-center items-center w-full my-5"
-          v-show="community.devices.length === 0"
+          v-if="!community.encryption"
+        >
+          <NEmpty :description="$t('message.devices.publicCommunity')">
+            <template #icon>
+              <Icon>
+                <AccessPoint />
+              </Icon>
+            </template>
+            <template #extra>
+              <NButton
+                size="small"
+                type="primary"
+                @click="() => joinPublicCommunity(community)"
+              >
+                {{ $t("message.devices.wantToJoin") }}
+              </NButton>
+            </template>
+          </NEmpty>
+        </div>
+        <div
+          class="flex justify-center items-center w-full my-5"
+          v-if="community.encryption && community.devices.length === 0"
         >
           <NEmpty :description="$t('message.devices.emptyTip')">
             <template #icon>
@@ -149,6 +184,12 @@ onMounted(getCommunities);
           showNewDeviceModal = false;
           showNewDeviceResult = false;
         "
+      />
+    </NModal>
+    <NModal v-model:show="showPublicCommunityJoinModal">
+      <PublicCommunityJoin
+        :community="newDevicePresetCommunity!"
+        @close="showPublicCommunityJoinModal = false"
       />
     </NModal>
   </div>

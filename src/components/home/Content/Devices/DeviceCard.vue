@@ -40,14 +40,6 @@ function removeThisDevice() {
     </template>
     <template #default>
       <NSpace vertical>
-        <NText>
-          {{ $t("message.devices.createdAt") }}:
-          <NTime :time="new Date(props.device.createdAt)" />
-        </NText>
-        <NText>
-          {{ $t("message.devices.owner") }}:
-          <NText strong>{{ props.device.owner.name }}</NText>
-        </NText>
         <NText v-if="props.device.isOnline">
           {{ $t("message.devices.ip", { ip: props.device.ip }) }}
         </NText>
@@ -62,6 +54,14 @@ function removeThisDevice() {
         <NText v-if="props.device.isOnline">
           {{ $t("message.devices.lastSeen") }}:
           <NTime :time="new Date(props.device.lastSeen! * 1000)" />
+        </NText>
+        <NText>
+          {{ $t("message.devices.createdAt") }}:
+          <NTime :time="new Date(props.device.createdAt)" />
+        </NText>
+        <NText>
+          {{ $t("message.devices.owner") }}:
+          <NText strong>{{ props.device.owner.name }}</NText>
         </NText>
       </NSpace>
     </template>

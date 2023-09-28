@@ -12,13 +12,17 @@ import {
 } from "naive-ui";
 import { h, ref, onMounted, type Ref, reactive } from "vue";
 import { useI18n } from "vue-i18n";
-import { listCommunities } from "@/api/v1/management/communities";
+import {
+  deleteCommunity,
+  listCommunities,
+} from "@/api/v1/management/communities";
 import { Icon } from "@vicons/utils";
 import { Edit, Trash, Refresh, Plus } from "@vicons/tabler";
 
 import CommunityEditModal from "./CommunityEditModal.vue";
 
 const { t } = useI18n();
+const dialog = useDialog();
 
 const communities: Ref<Community[]> = ref([]);
 const showEditModal = ref(false);
@@ -136,7 +140,17 @@ async function getCommunities() {
 
 function handleEdit(community: Community) {}
 
-function handleRemove(community: Community) {}
+function handleRemove(community: Community) {
+  dialog.warning({
+    title: t("message.admin.community.remove.confirm"),
+    content: t("message.admin.community.remove.confirmTip"),
+    positiveText: t("message.common.confirm"),
+    negativeText: t("message.common.cancel"),
+    onPositiveClick() {
+      deleteCommunity(community.id).then(getCommunities);
+    },
+  });
+}
 
 function handleAdd() {
   editIsNew.value = true;

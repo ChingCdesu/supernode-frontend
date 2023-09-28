@@ -47,6 +47,10 @@ message:
     createdAt: "添加于"
     owner: "归属于"
     deleteConfirm: "删除这个设备？（无法恢复）"
+    publicCommunity: "这个社群是公开的，任何人都可以加入"
+    wantToJoin: "我想要加入"
+    joinCommunity: "加入社群"
+    secretTip: "注意：只有密钥相同的设备才能互相访问！"
   newDevice:
     addNewDevice: "添加新设备"
     selectCommunity: "选择社群"
@@ -79,3 +83,7 @@ message:
       edit:
         createNewCommunity: 创建新社群
         editCommunity: 编辑社群
+      remove:
+        removeCommunity: 删除社群
+        confirm: 确认删除社群？
+        confirmTip: "注意：删除社群会同时删除该社群下的所有设备，且无法恢复！"
