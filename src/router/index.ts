@@ -23,9 +23,13 @@ router.beforeEach((to, from, next) => {
   if (isExpired.value) {
     return { path: "/login" };
   } else {
-    getMe().catch(() => {
-      next({ path: "/login" });
-    });
+    getMe()
+      .then(() => {
+        next();
+      })
+      .catch(() => {
+        next({ path: "/login" });
+      });
   }
 });
 
