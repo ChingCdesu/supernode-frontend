@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import { useAuthState } from "@/store/auth";
+import { useUserState } from "@/store/user";
 
 import HomeRoute from "@/router/routes/home";
 import LoginRoute from "@/router/routes/login";
-import { getMe } from "@/api/v1/business/users";
 
 const { isExpired } = useAuthState();
+const { getMe } = useUserState();
 
 const router = createRouter({
   history: createWebHistory(),
