@@ -36,20 +36,31 @@ function oidcLogin() {
 
 <template>
   <div class="container">
-    <NCard class="login-card" :bordered="false" :title="$t('message.common.welcomeback')">
+    <NCard
+      class="login-card"
+      :bordered="false"
+      :title="$t('message.common.welcomeback')"
+    >
       <NSpace vertical>
         <div class="input-row">
           <Icon size="24">
             <UserCircle />
           </Icon>
-          <NInput :placeholder="$t('message.common.username')" v-model:value="inputUsername" />
+          <NInput
+            :placeholder="$t('message.common.username')"
+            v-model:value="inputUsername"
+          />
         </div>
         <div class="input-row">
           <Icon size="24">
             <Lock />
           </Icon>
-          <NInput type="password" show-password-on="click"
-            :placeholder="$t('message.common.passcode')" v-model:value="inputPassword" />
+          <NInput
+            type="password"
+            show-password-on="click"
+            :placeholder="$t('message.common.passcode')"
+            v-model:value="inputPassword"
+          />
         </div>
       </NSpace>
 
@@ -93,7 +104,7 @@ function oidcLogin() {
   align-items: center;
   text-align: start;
 
-  &> :deep(.xicon) {
+  & > :deep(.xicon) {
     margin-right: 4px;
   }
 }
@@ -102,7 +113,7 @@ function oidcLogin() {
   display: flex;
   flex-direction: column;
 
-  &>* {
+  & > * {
     margin-bottom: 1em;
   }
 }
