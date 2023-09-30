@@ -15,22 +15,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.path.startsWith("/api")) {
+    next();
     return;
   }
   if (to.path === "/login") {
+    next();
     return;
   }
   if (isExpired.value) {
-    return { path: "/login" };
-  } else {
-    getMe()
-      .then(() => {
-        next();
-      })
-      .catch(() => {
-        next({ path: "/login" });
-      });
+    next({ path: "/login" });
+    return;
   }
+  getMe()
+    .then(() => next())
+    .catch(() => next({ path: "/login" }));
 });
 
 export default router;
