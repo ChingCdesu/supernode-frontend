@@ -23,7 +23,7 @@ export const useAuthState = createGlobalState(() => {
   });
 
   const isExpired = computed(
-    () => tokenExpiredAt.value && tokenExpiredAt.value > new Date()
+    () => !tokenExpiredAt.value || tokenExpiredAt.value < new Date()
   );
 
   return { tokenExpiredAt, isExpired };
