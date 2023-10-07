@@ -87,3 +87,23 @@ message:
         removeCommunity: 删除社群
         confirm: 确认删除社群？
         confirmTip: "注意：删除社群会同时删除该社群下的所有设备，且无法恢复！"
+    device:
+      column:
+        name: 设备名称
+        status: 状态
+        community: 所属社群
+        mac: MAC地址
+        ip: IP地址
+        protocol: 连接协议
+        owner: 归属于
+        lastSeen: 最后连接于
+      status:
+        online: 在线
+        offline: 离线
+      edit:
+        createNewDevice: 添加新设备
+        editDevice: 编辑设备
+      remove:
+        removeDevice: 删除设备
+        confirm: 确认删除设备？
+        confirmTip: "注意：删除设备后无法恢复！"
