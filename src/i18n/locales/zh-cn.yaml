@@ -10,10 +10,11 @@ message:
     cancel: 取消
     community: 社群
     required: "{field}为必填项"
-    copy: "复制"
-    copied: "已复制！"
+    copy: 复制
+    copied: 已复制！
     create: 创建
     update: 更新
+    submit: 提交
   tips:
     developing: 该功能还在建设中~ (ovo)
     requestError: 获取数据失败：{message}
@@ -43,29 +44,45 @@ message:
     protocol: "连接协议: {protocol}"
     mac: "设备MAC地址: {mac}"
     ip: "设备IP地址: {ip}"
-    lastSeen: "最后连接于"
-    createdAt: "添加于"
-    owner: "归属于"
-    deleteConfirm: "删除这个设备？（无法恢复）"
-    publicCommunity: "这个社群是公开的，任何人都可以加入"
-    wantToJoin: "我想要加入"
-    joinCommunity: "加入社群"
-    secretTip: "注意：只有密钥相同的设备才能互相访问！"
+    lastSeen: 最后连接于
+    createdAt: 添加于
+    owner: 归属于
+    deleteConfirm: 删除这个设备？（无法恢复）
+    publicCommunity: 这个社群是公开的，任何人都可以加入
+    wantToJoin: 我想要加入
+    joinCommunity: 加入社群
+    secretTip: 注意：只有密钥相同的设备才能互相访问！
+    column:
+      name: 设备名称
+      status: 状态
+      community: 所属社群
+      mac: MAC地址
+      ip: IP地址
+      protocol: 连接协议
+      owner: 归属于
+      lastSeen: 最后连接于
+      createdAt: 创建于
+      updatedAt: 更新于
+      password: 密码
+      action: 操作
+  editDeviceModal:
+    editDevice: 修改设备信息
+    addNewDevice: 添加新设备
   newDevice:
-    addNewDevice: "添加新设备"
-    selectCommunity: "选择社群"
-    deviceName: "设备名称"
-    advanced: "高级"
-    password: "密码"
-    add: "添加"
+    addNewDevice: 添加新设备
+    selectCommunity: 选择社群
+    deviceName: 设备名称
+    advanced: 高级
+    password: 密码
+    add: 添加
     deviceAdded: 已添加设备
-    secret: "密钥"
-    secretTip: "由于该社群强制启用了加密链接，所以您必须指定密钥。注意：只有密钥相同的设备才能互相访问！"
-    runInBackend: "在后台运行"
-    shellCommand: "命令行"
-    securityTip: "你的密码和密钥不会在服务器保存，所以请务必妥善保管！"
-    ipAddress: "IP地址"
-    ipAddressTip: "你可以指定设备的IP地址，如果不指定则会自动分配"
+    secret: 密钥
+    secretTip: 由于该社群强制启用了加密链接，所以您必须指定密钥。注意：只有密钥相同的设备才能互相访问！
+    runInBackend: 在后台运行
+    shellCommand: 命令行
+    securityTip: 你的密码和密钥不会在服务器保存，所以请务必妥善保管！
+    ipAddress: IP地址
+    ipAddressTip: 你可以指定设备的IP地址，如果不指定则会自动分配
   admin:
     community:
       column:
@@ -73,7 +90,7 @@ message:
         subnet: 子网网段
         authority: 身份验证方式
         onlineDeviceCount: 在线设备数
-        totalDeviceCount: 设备数
+        totalDeviceCount: 注册设备数
         createdAt: 创建时间
         updatedAt: 更新时间
         action: 操作
@@ -86,17 +103,8 @@ message:
       remove:
         removeCommunity: 删除社群
         confirm: 确认删除社群？
-        confirmTip: "注意：删除社群会同时删除该社群下的所有设备，且无法恢复！"
+        confirmTip: 注意：删除社群会同时删除该社群下的所有设备，且无法恢复！
     device:
-      column:
-        name: 设备名称
-        status: 状态
-        community: 所属社群
-        mac: MAC地址
-        ip: IP地址
-        protocol: 连接协议
-        owner: 归属于
-        lastSeen: 最后连接于
       status:
         online: 在线
         offline: 离线
@@ -106,4 +114,15 @@ message:
       remove:
         removeDevice: 删除设备
         confirm: 确认删除设备？
-        confirmTip: "注意：删除设备后无法恢复！"
+        confirmTip: 注意：删除设备后无法恢复！
+      selectCommunity: 选择社群：
+    user:
+      column:
+        name: 用户名
+        email: 邮箱
+        role: 角色
+        issuer: 身份验证方式
+        actions: 操作
+      role:
+        admin: 管理员
+        user: 普通用户

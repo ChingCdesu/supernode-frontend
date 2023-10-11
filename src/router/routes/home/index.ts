@@ -20,11 +20,11 @@ const route: RouteRecordRaw = {
       children: [
         {
           path: "users",
-          component: () => import("@/components/home/Content/Admin/Users.vue"),
+          component: () => import("@/components/home/Content/Admin/Users/Users.vue"),
         },
         {
           path: "devices",
-          component: () => import("@/components/home/Content/Admin/Devices.vue"),
+          component: () => import("@/components/home/Content/Admin/Devices/Devices.vue"),
         },
         {
           path: "communities",

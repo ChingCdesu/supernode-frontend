@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { NButton, NCard, NSpace, NText, NTime } from "naive-ui";
+import { NButton, NCard, NSpace, NText, NTime, NPopconfirm } from "naive-ui";
 import { Icon } from "@vicons/utils";
 import { TrashX } from "@vicons/tabler";
 
@@ -12,12 +12,12 @@ const props = defineProps<{
   device: Device;
 }>();
 
-const emit = defineEmits(['deleted'])
+const emit = defineEmits(["deleted"]);
 
-const { user } = useUserState()
+const { user } = useUserState();
 
 function removeThisDevice() {
-  deleteDevice(props.device.id).then(() => emit('deleted'))
+  deleteDevice(props.device.id).then(() => emit("deleted"));
 }
 </script>
 
@@ -25,18 +25,31 @@ function removeThisDevice() {
   <NCard segmented>
     <template #header>
       <NSpace align="center" size="small">
-        <div class="status-circle" :class="props.device.isOnline ? 'online' : ''" />
+        <div
+          class="status-circle"
+          :class="props.device.isOnline ? 'online' : ''"
+        />
         <NText class="text-xl mr-1">{{ props.device.name }}</NText>
       </NSpace>
     </template>
     <template #header-extra>
-      <NButton text circle type="error" v-if="user?.id === props.device.owner.id" @click="removeThisDevice">
-        <template #icon>
-          <Icon>
-            <TrashX />
-          </Icon>
+      <NPopconfirm
+        @positive-click="removeThisDevice"
+        v-if="user?.id === props.device.owner.id"
+      >
+        <template #trigger>
+          <NButton text circle type="error">
+            <template #icon>
+              <Icon>
+                <TrashX />
+              </Icon>
+            </template>
+          </NButton>
         </template>
-      </NButton>
+        <template #default>
+          <NText>{{ $t("message.devices.deleteConfirm") }}</NText>
+        </template>
+      </NPopconfirm>
     </template>
     <template #default>
       <NSpace vertical>

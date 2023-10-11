@@ -141,7 +141,7 @@ async function getCommunities() {
 function handleEdit(community: Community) {}
 
 function handleRemove(community: Community) {
-  dialog.warning({
+  dialog.error({
     title: t("message.admin.community.remove.confirm"),
     content: t("message.admin.community.remove.confirmTip"),
     positiveText: t("message.common.confirm"),
