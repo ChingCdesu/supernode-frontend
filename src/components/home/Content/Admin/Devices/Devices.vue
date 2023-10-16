@@ -218,6 +218,7 @@ function handleAdd() {
     message.error(t("message.admin.device.selectCommunityTip"));
     return;
   }
+  editIsNew.value = true;
   editingDevice.value = undefined;
   showEditModal.value = true;
 }
