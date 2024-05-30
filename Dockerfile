@@ -1,4 +1,4 @@
-FROM docker.io/emscripten/emsdk:3.1.46 as build
+FROM docker.io/emscripten/emsdk:3.1.60 as build
 WORKDIR /code
 
 COPY . .
