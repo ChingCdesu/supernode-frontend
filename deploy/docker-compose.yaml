@@ -1,0 +1,58 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: <your database password>
+      POSTGRES_USER: supernode
+      POSTGRES_DB: supernode
+    volumes:
+      - ./volumes/postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'supernode']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  supernode:
+    image: ghcr.io/chingcdesu/supernode-server:1.0.0-alpha.15
+    ports:
+      - '7654:7654/udp'
+    environment:
+      - DATA_SOURCE_DIALECT=postgres
+      - DATA_SOURCE_USERNAME=supernode
+      - DATA_SOURCE_PASSWORD=<your database password>
+      - DATA_SOURCE_HOST=postgres
+      - DATA_SOURCE_PORT=5432
+      - DATA_SOURCE_DATABASE=supernode
+      - APP_ADMIN_NAME=admin
+      - APP_ADMIN_PASSWORD=<your admin password>
+      - APP_LOG_LEVEL=5
+      - CACHE_REDIS_URL=redis://redis:6379
+    cap_add:
+      - 'NET_ADMIN'
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    depends_on:
+      - postgres
+      - redis
+    tty: true
+  frontend:
+    image: ghcr.io/chingcdesu/supernode-frontend:1.0.0-alpha.10
+    ports:
+      - '8080:80'
+    environment:
+      - SERVER_NAME=<your server name>
+      - SUPERNODE_SERVER_HOST=http://supernode:8080
+    depends_on:
+      - supernode
+  redis:
+    image: redis:6
+    restart: always
+    volumes:
+      - ./volumes/redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
