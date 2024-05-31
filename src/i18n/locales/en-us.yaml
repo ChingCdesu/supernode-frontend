@@ -7,6 +7,14 @@ message:
     redirecting: Redirecting...
     cancel: Cancel
     community: Community
+    confirm: Confirm
+    close: Close
+    required: "{field} is required"
+    copy: Copy
+    copied: Copied!
+    create: Create
+    update: Update
+    submit: Submit
   tips:
     developing: Coming Soon~ (ovo)
     requestError: "Cannot get data: {message}"
@@ -23,7 +31,6 @@ message:
     admin: Admin
     communities: Communities
     users: Users
-      
   settings:
     appearance:
       $title: Appearance
@@ -41,4 +48,81 @@ message:
     createdAt: "Joined at"
     owner: "Owner"
     deleteConfirm: "Delete this device? (Cannot undo)"
-    
+    publicCommunity: This community is public, anyone can join
+    wantToJoin: I want to join
+    joinCommunity: Join Community
+    secretTip: "Note: Only devices with the same secret can access each other!"
+    column:
+      name: Device Name
+      status: Status
+      community: Community
+      mac: MAC Address
+      ip: IP Address
+      protocol: Protocol
+      owner: Owner
+      lastSeen: Last Seen
+      createdAt: Created At
+      updatedAt: Updated At
+      password: Password
+      action: Action
+  editDeviceModal:
+    editDevice: Edit Device Properties
+    addNewDevice: Add new Device
+  newDevice:
+    addNewDevice: Add new Device
+    selectCommunity: Choose a community
+    deviceName: Device Name
+    advanced: Advanced
+    password: Password
+    add: Add
+    deviceAdded: Already added
+    secret: Secret
+    secretTip: "Since this community requires encrypted connection, you must specify a secret. Note: Only devices with the same secret can access each other!"
+    runInBackend: Run in background
+    shellCommand: Shell Command
+    securityTip: "Your password and secret will not be saved on the server, so please keep them safe!"
+    ipAddress: IP Address
+    ipAddressTip: You can specify the IP address of the device, if not specified, it will be automatically assigned
+  admin:
+    community:
+      column:
+        name: Community Name
+        subnet: Subnet
+        authority: Authentication Method
+        onlineDeviceCount: Online Devices Count
+        totalDeviceCount: Registered Devices Count
+        createdAt: Created At
+        updatedAt: Updated At
+        action: Action
+      authority:
+        public: Public
+        private: Username and Password
+      edit:
+        createNewCommunity: Create New Community
+        editCommunity: Edit Community
+      remove:
+        removeCommunity: Remove Community
+        confirm: Confirm removing community?
+        confirmTip: "Note: Removing a community will also remove all devices under it and cannot be undone!"
+    device:
+      status:
+        online: Online
+        offline: Offline
+      edit:
+        createNewDevice: Add New Device
+        editDevice: Edit Device
+      remove:
+        removeDevice: Remove Device
+        confirm: Confirm removing device?
+        confirmTip: "Note: Removing a device cannot be undone!"
+      selectCommunity: "Select Community"
+    user:
+      column:
+        name: Username
+        email: Email
+        role: Role
+        issuer: Authentication Method
+        actions: Actions
+      role:
+        admin: Administrator
+        user: Regular User
