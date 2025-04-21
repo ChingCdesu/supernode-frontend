@@ -7,7 +7,6 @@
 .gitignore
 
 # docker files
-Dockerfile*
 docker-compose*
 .dockerignore
 
